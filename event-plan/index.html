@@ -7,8 +7,11 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <link href="assets/font-awesome/css/fontawesome-all.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     <script src="node_modules/axios/dist/axios.min.js"></script>
-    <script src="index.js"></script>
+    
     <title></title>
   </head>
   <body>
@@ -35,8 +38,7 @@
         <div class="navbar navbar-dark bg-dark box-shadow">
           <div class="container d-flex justify-content-between">
             <a href="#" class="navbar-brand d-flex align-items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-              <strong>Event Planner</strong>
+              🚀 <strong>Event Planner</strong>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -46,6 +48,19 @@
       </header>
   
       <main role="main">
+
+        <section class="jumbotron  back-mesh text-center">
+          <div class="container">
+            <h1 class="jumbotron-heading">Booking Dashboard</h1>
+            <p class="lead text-muted">Manage all your bookings from one place, create new bookings, create new halls & items and generate print ready Invoices.</p>
+            <p>
+              <button class="btn btn-success my-2" data-toggle="modal" data-target="#bookingModal">New Booking</button>
+              <button style="color: rgba(5, 102, 5, 0.74)" class="btn btn-outline-warning my-2" data-toggle="modal" data-target="#hallModal">Create Hall</button>
+              <button style="color: rgba(5, 102, 5, 0.74)" class="btn btn-outline-warning my-2" data-toggle="modal" data-target="#itemModal">Create Item</button>
+            </p>
+          </div>
+        </section>
+
         <div class="album py-5 bg-light">
           <div class="container">
   
@@ -65,12 +80,202 @@
         </div>
       </footer>
 
+
+
+<!-- Hall Modal -->
+<div class="modal fade" id="hallModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header back-mesh">
+        <h5 class="modal-title" id="exampleModalLabel1">Hall</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="hall_modal_body">
+          <form>
+              <input type="text" class="form-control" id="hall_id" hidden>
+              <div class="form-group" id="hall_name_group">
+                <label for="hall_name" class="col-form-label">Hall Name</label>
+                <input type="text" class="form-control" id="hall_name" required>
+                <div id="hall_name_error" class="text-danger"></div>
+              </div>
+              <div class="form-group">
+                <p>Status</p>
+                <div class="radio-item">
+                  <input type="radio" id="hallRadio1" name="hallRadio" value="Clean" checked>
+                  <label for="hallRadio1">Clean</label>
+                </div>
+                <div class="radio-item">
+                  <input type="radio" id="hallRadio2" name="hallRadio" value="Dirty">
+                  <label for="hallRadio2">Dirty</label>
+                </div>
+                <div class="radio-item">
+                  <input type="radio" id="hallRadio3" name="hallRadio" value="Under Repair">
+                  <label for="hallRadio3">Under Repair</label>
+                </div>
+              </div>
+              <div class="form-group">
+                <p>Cooling</p>
+                <div class="radio-item">
+                  <input type="radio" id="hallCooling1" name="hallCooling" value="AC">
+                  <label for="hallCooling1">Air-Conditioned</label>
+                </div>
+                <div class="radio-item">
+                  <input type="radio" id="hallCooling2" name="hallCooling" value="Non-AC" checked>
+                  <label for="hallCooling2">Normal</label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="hall_desc" class="col-form-label">Description</label>
+                <input type="text" class="form-control" id="hall_desc">
+              </div>
+              <div class="form-row">
+                <div class="col-md-6 mb-3">
+                  <label for="hall_price" class="col-form-label">Rate</label>
+                  <input type="number" class="form-control" id="hall_price">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="hall_cap" class="col-form-label">Capacity</label>
+                  <input type="number" class="form-control" id="hall_cap">
+                </div>
+              </div>
+            </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success" id="save_hall">Create Hall</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Item Modal -->
+<div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header back-mesh">
+        <h5 class="modal-title" id="exampleModalLabel2">Item</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="item_modal_body">
+          <form>
+              <input type="text" class="form-control" id="item_id" hidden>
+              <div class="form-group" id="item_name_group">
+                <label for="item_name" class="col-form-label">Item Name</label>
+                <input type="text" class="form-control" id="item_name">
+                <div id="item_name_error" class="text-danger"></div>
+              </div>
+              <div class="form-group">
+                <p>Status</p>
+                <div class="radio-item2">
+                    <input type="radio" id="itemRadio1" name="itemRadio" value="Active" checked>
+                    <label for="itemRadio1">Active</label>
+                </div>
+                <div class="radio-item2">
+                    <input type="radio" id="itemRadio2" name="itemRadio" value="Inactive">
+                    <label for="itemRadio2">Inactive</label>
+                </div>
+              </div>
+              <div class="form-group">
+                  <label for="item_price" class="col-form-label">Rate</label>
+                  <input type="number" class="form-control" id="item_price">
+                </div>
+            </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+        <button type="button" id="save_item" class="btn btn-success">Create Item</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- BOOKING Modal -->
+<div class="modal fade" id="bookingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header back-mesh">
+        <h5 class="modal-title" id="exampleModalLabel3">Booking</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="booking_modal_body">
+          <form>
+              <input type="text" class="form-control" id="booking_id" hidden>
+              <div class="form-group" id="booking_name_group">
+                <label for="cust_name" class="col-form-label">Customer Name</label>
+                <input type="text" class="form-control" id="cust_name" required>
+                <div id="cust_name_error" class="text-danger"></div>
+              </div>
+              <div class="form-group">
+                <p>Status</p>
+                <div class="radio-item">
+                  <input type="radio" id="hallRadio1" name="hallRadio" value="Clean" checked>
+                  <label for="hallRadio1">Clean</label>
+                </div>
+                <div class="radio-item">
+                  <input type="radio" id="hallRadio2" name="hallRadio" value="Dirty">
+                  <label for="hallRadio2">Dirty</label>
+                </div>
+                <div class="radio-item">
+                  <input type="radio" id="hallRadio3" name="hallRadio" value="Under Repair">
+                  <label for="hallRadio3">Under Repair</label>
+                </div>
+              </div>
+              <div class="form-group">
+                <p>Cooling</p>
+                <div class="radio-item">
+                  <input type="radio" id="hallCooling1" name="hallCooling" value="AC">
+                  <label for="hallCooling1">Air-Conditioned</label>
+                </div>
+                <div class="radio-item">
+                  <input type="radio" id="hallCooling2" name="hallCooling" value="Non-AC" checked>
+                  <label for="hallCooling2">Normal</label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="hall_desc" class="col-form-label">Description</label>
+                <input type="text" class="form-control" id="hall_desc">
+              </div>
+              <div class="form-row">
+                <div class="col-md-6 mb-3">
+                  <label for="hall_price" class="col-form-label">Rate</label>
+                  <input type="number" class="form-control" id="hall_price">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="hall_cap" class="col-form-label">Capacity</label>
+                  <input type="number" class="form-control" id="hall_cap">
+                </div>
+              </div>
+            </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success" id="save_hall">Create Hall</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
     
-    <!-- Optional JavaScript -->
+    <!-- Main JavaScript -->
+    <script src="index.js"></script>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="assets/js/jquery-3.3.1.slim.min.js"></script>
     <script src="assets/js/popper.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
+    <!-- Secondary JavaScript -->
+    <script src="createHall.js"></script>
+    <script src="createItem.js"></script>
   </body>
 </html>
